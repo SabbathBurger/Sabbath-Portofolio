@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Nouval Ghatfan | Creative Engineering</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --blue: #2563eb;
+  --purple: #8b5cf6; /* Warna ungu dikembalikan! */
+  --blue-dark: #1e3a8a;
+  --dark: #0f172a;
+  --light: #f8fafc;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: white;
+  color: var(--dark);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Background Blobs agar web terasa lebih hidup/ramai tapi tetap elegan */
+.bg-blob {
+  position: absolute;
+  filter: blur(90px);
+  z-index: -1;
+  opacity: 0.15;
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite alternate;
+}
+.blob-1 { top: 10%; left: -10%; width: 500px; height: 500px; background: var(--blue); }
+.blob-2 { top: 40%; right: -10%; width: 400px; height: 400px; background: var(--purple); }
+.blob-3 { bottom: 10%; left: 20%; width: 600px; height: 600px; background: linear-gradient(var(--blue), var(--purple)); }
+
+/* ANIMASI REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+nav.scrolled {
+  padding: 15px 0;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 30px rgba(139, 92, 246, 0.1);
+}
+
+.container { width: 90%; max-width: 1200px; margin: auto; position: relative; }
+
+nav .container { display: flex; justify-content: space-between; align-items: center; }
+
+nav h2 {
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  font-size: 1.5rem;
+}
+
+nav ul { display: flex; list-style: none; gap: 35px; }
+
+nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 600;
+  transition: color var(--transition);
+  position: relative;
+}
+
+nav a::after {
+  content: ''; position: absolute; width: 0; height: 2px;
+  bottom: -4px; left: 0; background: linear-gradient(90deg, var(--blue), var(--purple));
+  transition: width 0.3s ease;
+}
+nav a:hover { color: var(--purple); }
+nav a:hover::after { width: 100%; }
+
+/* SECTION GLOBAL */
+section { padding: 120px 0; scroll-margin-top: 80px; }
+.section-light { background: rgba(248, 250, 252, 0.5); }
+.section-title {
+  font-size: 2.8rem; font-weight: 900; margin-bottom: 70px; text-align: center; color: var(--dark);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: 80px;
+}
+
+.hero-content { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+
+.hero h1 { font-size: 4rem; font-weight: 900; line-height: 1.1; }
+
+.text-gradient { 
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p { margin: 25px 0; color: var(--muted); font-size: 1.1rem; max-width: 90%; }
+
+.btn {
+  display: inline-block; padding: 16px 36px;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  color: white; border-radius: 50px; text-decoration: none; font-weight: 700;
+  transition: var(--transition);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
+}
+
+.hero-image { position: relative; }
+.hero-image::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); width: 100%; height: 100%;
+  background: linear-gradient(45deg, var(--blue), var(--purple));
+  filter: blur(50px); opacity: 0.3; border-radius: 50%;
+  z-index: -1; animation: pulse 3s infinite alternate;
+}
+.hero-image img {
+  width: 100%; border-radius: 30px;
+  box-shadow: 0 25px 50px rgba(139, 92, 246, 0.15); /* Shadow ungu ditaruh di foto */
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.2; }
+  100% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.4; }
+}
+
+/* ABOUT SECTION */
+.about-section {
+  position: relative;
+  background-image: url('about.jpg'); /* 🖼️ GANTI FOTO BACKGROUND ABOUT */
+  background-size: cover; background-position: center; background-attachment: fixed;
+  color: white; padding: 140px 0; z-index: 1;
+}
+
+.about-section::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.85); z-index: -1;
+}
+
+.about-text {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  padding: 50px; border-radius: 25px; text-align: center;
+  line-height: 1.9; font-size: 1.15rem; max-width: 850px; margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(139, 92, 246, 0.2);
+}
+
+/* PROJECTS / SELECTED WORK - Dirombak Elegan & Detail */
+.project-container {
+  display: flex; flex-direction: column; gap: 60px;
+}
+
+.project-item {
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px;
+  background: white; padding: 40px; border-radius: 30px;
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.08); /* Shadow ungu-biru halus */
+  border: 1px solid rgba(139, 92, 246, 0.1);
+  transition: var(--transition);
+}
+
+.project-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(37, 99, 235, 0.15);
+}
+
+.project-item:nth-child(even) { grid-template-columns: 1.2fr 1fr; }
+.project-item:nth-child(even) .project-info { order: -1; } /* Memutar posisi teks dan gambar */
+
+.project-main-img {
+  width: 100%; height: 350px; object-fit: cover; border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.project-info h4 { font-size: 2rem; margin-bottom: 10px; color: var(--dark); font-weight: 800; }
+.project-role { font-weight: 600; color: var(--purple); margin-bottom: 15px; font-size: 1.1rem; }
+.project-desc { color: var(--muted); margin-bottom: 25px; line-height: 1.7; }
+
+/* Galeri Foto Pendukung dalam Project */
+.project-gallery { 
+  display: flex; gap: 15px; margin-top: auto;
+}
+.project-gallery img {
+  width: 100px; height: 75px; object-fit: cover; border-radius: 12px;
+  cursor: pointer; transition: var(--transition); border: 2px solid var(--border);
+}
+.project-gallery img:hover {
+  transform: scale(1.1) translateY(-5px); border-color: var(--purple);
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
+}
+
+/* EXPERIENCE TIMELINE - Dipercantik */
+#experience .container { max-width: 900px; }
+
+.timeline-item {
+  display: flex; align-items: flex-start; gap: 30px;
+  margin-bottom: 60px; position: relative; padding-left: 40px;
+}
+
+.timeline-item::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: -60px;
+  width: 3px; background: linear-gradient(to bottom, var(--blue), var(--purple));
+}
+.timeline-item:last-child::before { bottom: 0; }
+
+.timeline-item::after {
+  content: ""; position: absolute; left: -7px; top: 15px;
+  width: 17px; height: 17px; background: white; border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--purple), 0 0 15px rgba(139, 92, 246, 0.5);
+}
+
+.timeline-logo {
+  width: 80px; height: 80px; border-radius: 20px; object-fit: contain;
+  background: white; padding: 10px; border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05); flex-shrink: 0;
+}
+
+.timeline-content { flex-grow: 1; background: rgba(255,255,255,0.7); padding: 25px; border-radius: 20px; border: 1px solid var(--border); transition: var(--transition);}
+.timeline-content:hover { box-shadow: 0 15px 35px rgba(139, 92, 246, 0.1); transform: translateY(-5px);}
+
+.timeline-date {
+  display: inline-block; padding: 6px 15px; background: rgba(139, 92, 246, 0.1);
+  color: var(--purple); font-weight: 700; font-size: 0.85rem; border-radius: 50px; margin-bottom: 10px;
+}
+
+.timeline-content h4 { font-size: 1.4rem; color: var(--dark); margin-bottom: 5px; font-weight: 800; }
+.timeline-content p { color: var(--muted); font-weight: 500; margin-bottom: 15px; }
+
+/* Foto Pendukung dalam Timeline */
+.timeline-support-img {
+  width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px;
+  margin-top: 10px; border: 1px solid var(--border);
+}
+
+/* SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+
+.skill-card {
+  background: rgba(255, 255, 255, 0.9); padding: 40px 30px; border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.08); transition: var(--transition);
+  border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center;
+}
+.skill-card:hover {
+  transform: translateY(-10px); border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 25px 60px rgba(139, 92, 246, 0.2);
+}
+
+.skill-header { text-align: center; margin-bottom: 25px; }
+.skill-icon { font-size: 30px; color: var(--purple); margin-bottom: 15px; }
+.skill-title { font-weight: 800; font-size: 1.2rem; color: var(--dark); }
+
+/* CIRCLE PROGRESS */
+.circle { position: relative; width: 120px; height: 120px; margin: 0 auto 25px auto; }
+.circle svg { transform: rotate(-90deg); }
+.circle circle { fill: none; stroke-width: 10; stroke-linecap: round; }
+.bg { stroke: #f1f5f9; }
+.progress { stroke: url(#gradient); stroke-dasharray: 314; stroke-dashoffset: 314; transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.4));}
+.percent-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.3rem; color: var(--dark); }
+
+.sub-skills { margin-top: auto; width: 100%; }
+.sub-skills ul { list-style: none; padding-left: 0; }
+.sub-skills li { margin-bottom: 10px; font-size: 0.95rem; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; }
+.sub-skills li::before { content: '✓'; color: var(--purple); font-weight: bold; }
+
+/* SOCIAL */
+.social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+.social-card {
+  background: white; padding: 30px 20px; border-radius: 20px; text-align: center;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.08); transition: var(--transition); border: 1px solid var(--border);
+}
+.social-card:hover {
+  transform: translateY(-10px); border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+}
+.social-card img { width: 55px; height: 55px; object-fit: contain; margin-bottom: 15px; transition: transform 0.3s ease; }
+.social-card:hover img { transform: scale(1.1) rotate(5deg); }
+.social-card a { text-decoration: none; color: var(--dark); font-weight: 700; font-size: 1.1rem; }
+
+footer { text-align: center; padding: 40px 0; color: var(--muted); border-top: 1px solid var(--border); background: white; }
+
+/* MEDIA QUERY */
+@media(max-width:900px) {
+  .hero-content { grid-template-columns: 1fr; text-align: center; }
+  .hero h1 { font-size: 3rem; }
+  .project-item, .project-item:nth-child(even) { grid-template-columns: 1fr; }
+  .project-item:nth-child(even) .project-info { order: 0; }
+}
+@media(max-width:600px) {
+  nav .container { flex-direction: column; gap: 15px; }
+  .timeline-item { flex-direction: column; padding-left: 20px; gap: 15px; }
+  .timeline-item::after { left: -7px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+<div class="bg-blob blob-3"></div>
+
+<svg width="0" height="0" style="position: absolute;">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<nav id="navbar">
+<div class="container">
+  <h2>NOUVAL GHATFAN</h2>
+  <ul>
+    <li><a href="#about">About</a></li> 
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#social">Contact</a></li>
+  </ul>
+</div>
+</nav>
+
+<section class="hero">
+<div class="container hero-content">
+  <div class="reveal">
+    <h1>Creative <span class="text-gradient">Engineer</span><br>& Media Founder</h1>
+    <p>Electrical Engineering student blending technical innovation & digital branding strategy.</p>
+    <a href="#projects" class="btn">Explore My Work</a>
+  </div>
+  <div class="hero-image reveal" style="transition-delay: 0.2s;">
+    <img src="NOVAL.png" alt="Nouval"> </div>
+</div>
+</section>
+
+<section id="about" class="about-section">
+<div class="container reveal">
+  <h3 class="section-title" style="color: white;">About Me</h3>
+  <div class="about-text">
+    <p>
+      My name is Muhammad Nouval Ghatfan. I am an Electrical Engineering student at Institut Teknologi Nasional (ITENAS) and also a journalist at PastiNews.id. I position myself at the intersection of technical innovation and strategic communication, where I combine engineering precision with the art of digital storytelling.
+
+Through my academic background in engineering, I develop analytical thinking, problem-solving skills, and a structured approach to understanding complex systems. Meanwhile, my experience as a journalist sharpens my ability to communicate ideas clearly, critically, and strategically to a broader audience.
+
+I am highly adaptable and enjoy exploring new challenges. I believe that complex technical concepts should not remain exclusive to technical circles; they should be translated into meaningful, impactful narratives that resonate in today’s digital landscape. My goal is to continuously grow at the convergence of technology and communication, creating value through both innovation and storytelling.
+    </p>
+  </div>
+</div>
+</section>
+
+<section id="projects" class="section-light">
+<div class="container">
+<h3 class="section-title reveal">Selected Work</h3>
+
+<div class="project-container">
+  
+  <div class="project-item reveal">
+    <img src="pixel studio logo.jpg" alt="Pixel Studio" class="project-main-img">
+    <div class="project-info">
+      <h4>Pixel Studio</h4>
+      <p class="project-role">Hardware Innovator & Creator</p>
+      <p class="project-desc">
+        “The Pocket Memory Archive,” an innovative portable moving photo display. I was fully responsible for the entire development process, from conceptualizing the idea and designing the electronic circuitry to integrating an Arduino microcontroller with an OLED display. I also designed and fabricated the casing using 3D printing technology to ensure a compact, functional, and aesthetically refined final product.
+        </p>
+      <div class="project-gallery">
+        <img src="3D.jpg" alt="Proses 3D Print" title="Proses 3D Printing">
+        <img src="wiring.jpg" alt="Wiring Arduino" title="Wiring Sirkuit">
+        <img src="pixel studio support 1.jpg" alt="Hasil Akhir" title="Hasil Akhir">
+      </div>
+    </div>
+  </div>
+
+  <div class="project-item reveal">
+    <div class="project-info">
+      <h4>PastiNews.id</h4>
+      <p class="project-role">Digital Journalist & Strategist</p>
+      <p class="project-desc">
+        Berperan aktif sebagai jurnalis digital yang menyajikan informasi aktual dan terpercaya. Fokus pada penyusunan narasi (*digital storytelling*), meriset berita teknis maupun sosial, serta mengoptimalkan strategi konten agar dapat menjangkau dan mengedukasi masyarakat luas di era disrupsi digital saat ini.
+      </p>
+      <div class="project-gallery">
+        <img src="foto pendukung pastinews 1.png" alt="Liputan" title="Proses Liputan">
+        <img src="pastinews 2.jpg" alt="Menulis Artikel" title="Menulis Artikel">
+      </div>
+    </div>
+    <img src="pastinews.jpg" alt="PastiNews" class="project-main-img">
+  </div>
+
+  <div class="project-item reveal">
+    <img src="itenas 2.jpg" alt="Itenas Lab" class="project-main-img">
+    <div class="project-info">
+      <h4>Institut Teknologi Nasional</h4>
+      <p class="project-role">Electrical Engineering Student</p>
+      <p class="project-desc">
+        Sebagai mahasiswa aktif Teknik Elektro, saya banyak melakukan riset, praktikum laboratorium, dan pengembangan purwarupa *embedded system*. Menggabungkan teori akademis dengan praktik industri nyata, mulai dari analisis rangkaian listrik, simulasi Proteus, hingga pemrograman mikrokontroler tingkat lanjut.
+      </p>
+      <div class="project-gallery">
+        <img src="praktikum 2.jpg" alt="Praktikum Lab" title="Praktikum Lab">
+        <img src="projek.jpg" alt="Project Kelas" title="Tugas Proyek">
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</section>
+
+<section id="experience">
+<div class="container">
+<h3 class="section-title reveal">Experience Timeline</h3>
+
+<div class="timeline-item reveal">
+  <img src="itenas.png" class="timeline-logo" alt="Itenas">
+  <div class="timeline-content">
+    <div class="timeline-date">2025 - Sekarang</div>
+    <h4>Institut Teknologi Nasional Bandung</h4>
+    <p>Mahasiswa Aktif Teknik Elektro</p>
+    <p style="font-size: 0.95rem; line-height: 1.6;">I actively contribute to the Student Association of Electrical Engineering (HME). I have been involved in community service initiatives such as designing and installing public street lighting (PJU) systems. In addition, I participate in academic development programs, technical workshops, internal organizational management, collaborative engineering projects, and event coordination that enhance both my leadership and technical competencies.
+
+Each phase of my journey reflects my commitment to continuous growth—integrating creativity, engineering expertise, teamwork, and leadership to create meaningful impact wherever I contribute.</p>
+    <img src="experience itenas.jpg" alt="Activites" class="timeline-support-img">
+  </div>
+</div>
+
+<div class="timeline-item reveal">
+  <img src="surya.png" class="timeline-logo" alt="Surya Energi Indotama">
+  <div class="timeline-content">
+    <div class="timeline-date">Agustus 2024 - Desember 2024</div>
+    <h4>BUMN PT Surya Energi Indotama (SEI)</h4>
+    <p>Freelance Project Manager</p>
+    <p style="font-size: 0.95rem; line-height: 1.6;">I joined the Project Management Division, working within a multidisciplinary team environment. My technical background enabled me to contribute directly to assembling electrical panels for solar power systems. Beyond technical execution, I was also involved in field assignments, including an official project visit to Banten for earthquake sensor inspection in collaboration with BMKG. These experiences strengthened my adaptability, precision, and ability to operate effectively in professional and high-responsibility environments.</p>
+    <img src="experience sei 2.jpg" alt="Kegiatan SEI" class="timeline-support-img">
+  </div>
+</div>
+
+<div class="timeline-item reveal">
+  <img src="smkn 4.png" class="timeline-logo" alt="SMKN 4 Bandung">
+  <div class="timeline-content">
+    <div class="timeline-date">Januari 2021 - Agustus 2024</div>
+    <h4>SMKN 4 Bandung</h4>
+    <p>Siswa Sekolah Menengah Kejuruan</p>
+    <p style="font-size: 0.95rem; line-height: 1.6;">where I majored in Audio Video Engineering, I took part in initiating and organizing the first-ever art performance event in the school’s history. Together with my team, we transformed our shared enthusiasm and creative ambition into a tangible platform for expression. What began as an idea evolved into a successful inaugural event that energized the entire school community.</p>
+    <img src="experience smk4.jpg" alt="Kegiatan SMK" class="timeline-support-img">
+  </div>
+</div>
+
+</div>
+</section>
+
+<section id="skills" class="section-light">
+<div class="container">
+<h3 class="section-title reveal">Skill Expertise</h3>
+
+<div class="skills-grid">
+  <div class="skill-card reveal">
+    <div class="skill-header">
+      <div class="skill-icon"><i class="fas fa-microchip"></i></div>
+      <div class="skill-title">Hardware Development</div>
+    </div>
+    <div class="circle" data-percent="70">
+      <svg width="120" height="120">
+        <circle class="bg" cx="60" cy="60" r="50"></circle>
+        <circle class="progress" cx="60" cy="60" r="50"></circle>
+      </svg>
+      <div class="percent-text">0%</div>
+    </div>
+    <div class="sub-skills">
+      <ul>
+        <li>Circuit Design & Troubleshooting</li>
+        <li>Microcontrollers: Arduino, Raspberry Pi, ESP32</li>
+        <li>PCB Design: KiCAD, Eagle</li>
+        <li>Sensors & Actuators Integration</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="skill-card reveal" style="transition-delay: 0.15s;">
+    <div class="skill-header">
+      <div class="skill-icon"><i class="fas fa-code"></i></div>
+      <div class="skill-title">Embedded Systems</div>
+    </div>
+    <div class="circle" data-percent="75">
+      <svg width="120" height="120">
+        <circle class="bg" cx="60" cy="60" r="50"></circle>
+        <circle class="progress" cx="60" cy="60" r="50"></circle>
+      </svg>
+      <div class="percent-text">0%</div>
+    </div>
+    <div class="sub-skills">
+      <ul>
+        <li>Arduino IDE</li>
+        <li>MATLAB</li>
+        <li>HTML & CSS</li>
+        <li>Python & C++</li>
+        <li>Proteus Simulation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="skill-card reveal" style="transition-delay: 0.3s;">
+    <div class="skill-header">
+      <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
+      <div class="skill-title">Software & Frontend</div>
+    </div>
+    <div class="circle" data-percent="50">
+      <svg width="120" height="120">
+        <circle class="bg" cx="60" cy="60" r="50"></circle>
+        <circle class="progress" cx="60" cy="60" r="50"></circle>
+      </svg>
+      <div class="percent-text">0%</div>
+    </div>
+    <div class="sub-skills">
+      <ul>
+        <li>Responsive Web Design</li>
+        <li>UI/UX Layouting</li>
+        <li>Basic JavaScript</li>
+        <li>Portfolio & Landing Page Development</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<section id="social">
+<div class="container">
+<h3 class="section-title reveal">Let's Connect</h3>
+
+<div class="social-grid">
+<div class="social-card reveal">
+  <img src="instagram.webp" alt="Instagram">
+  <a href="https://www.instagram.com/mnnouvall" target="_blank">Instagram</a>
+</div>
+<div class="social-card reveal" style="transition-delay: 0.1s;">
+  <img src="linkedin.png" alt="LinkedIn">
+  <a href="https://www.linkedin.com/in/nouvalghatfan/" target="_blank">LinkedIn</a>
+</div>
+<div class="social-card reveal" style="transition-delay: 0.2s;">
+  <img src="letterboxd.jpg" alt="Letterboxd">
+  <a href="https://letterboxd.com/SabbathMovie/" target="_blank">LetterBoxd</a>
+</div>
+<div class="social-card reveal" style="transition-delay: 0.3s;">
+  <img src="email.png" alt="Email">
+  <a href="mailto:your@email.com">Gmail</a>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+© 2026 SabbathBurger — Crafted with Precision & Creativity.
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if(window.scrollY > 20) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+});
+
+const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      if(entry.target.classList.contains('skill-card') && !entry.target.classList.contains('animated-circle')) {
+        entry.target.classList.add('animated-circle');
+        animateSkillCircle(entry.target);
+      }
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function animateSkillCircle(cardElement) {
+  const circleContainer = cardElement.querySelector('.circle');
+  if(!circleContainer) return;
+  const percent = parseInt(circleContainer.getAttribute('data-percent'));
+  const progressCircle = circleContainer.querySelector('.progress');
+  const percentText = circleContainer.querySelector('.percent-text');
+  
+  const circumference = 314;
+  const offset = circumference - (circumference * percent / 100);
+  progressCircle.style.strokeDashoffset = offset;
+  
+  let currentVal = 0; const duration = 2000; const intervalTime = 20;
+  const increment = percent / (duration / intervalTime);
+  
+  let counter = setInterval(() => {
+    currentVal += increment;
+    if(currentVal >= percent) {
+      clearInterval(counter); percentText.textContent = percent + '%';
+    } else {
+      percentText.textContent = Math.round(currentVal) + '%';
+    }
+  }, intervalTime);
+}
+</script>
+
+</body>
+</html>
